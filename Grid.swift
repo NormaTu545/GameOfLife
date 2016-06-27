@@ -22,6 +22,10 @@ class Grid: SKSpriteNode {
     /* Creature Array */
     var gridArray = [[Creature]]()
     
+    /* Counters */
+    var generation = 0
+    var population = 0
+    
     func populateGrid() {
         /* Populate the grid with creatures */
         
@@ -50,8 +54,8 @@ class Grid: SKSpriteNode {
         let gridPosition = CGPoint(x: x*cellWidth, y: y*cellWidth)
         creature.position = gridPosition
         
-        /* Set default isAlive */
-        creature.isAlive = true
+        /* Set default to dead */
+        creature.isAlive = false
         
         /* Add creature to grid node */
         addChild(creature)
@@ -68,6 +72,14 @@ class Grid: SKSpriteNode {
             
             /* Grab position of touch relative to the grid */
             let location  = touch.locationInNode(self)
+            
+            /* Calculate grid array position */
+            let gridX = Int(location.x) / cellWidth
+            let gridY = Int(location.y) / cellHeight
+            
+            /* Toggle creature visibility */
+            let creature = gridArray[gridX][gridY]
+            creature.isAlive = !creature.isAlive
         }
     }
     
